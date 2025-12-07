@@ -11,6 +11,10 @@ connectDB();
 //rest object
 const app = express();
 
+//express will use this to parse json from request
+app.use(express.json());
+
+
 //routes
 app.use('/api/v1/test', require('./routes/testroute'));
 
