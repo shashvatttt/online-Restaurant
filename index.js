@@ -19,7 +19,7 @@ app.use(express.json());
 app.use('/api/v1/test', require('./routes/testroute'));
 app.use('/api/v1/auth', require('./routes/authroutes'));
 app.use('/api/v1/user', require('./routes/userroutes'));
-
+app.use('/api/v1/restaurant', require('./routes/restaurantroutes'))
 
 app.get('/', (req, res) => {
     return res.status(200).send("<h1> Welcome to food server </h1>");
