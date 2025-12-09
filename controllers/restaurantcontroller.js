@@ -29,4 +29,28 @@ const createresturantcontroller = async (req,res) => {
     }
 };
 
-module.exports = {createresturantcontroller}
+const getresturantcontroller = async (req,res) =>{
+    try {
+        const restaurants = await restaurantmodel.find({})
+        if(!restaurants){
+            return res.status(404).send({
+                success:false,
+                message:"No resturant available"
+            })
+        }
+        res.status(200).send({
+            success:true,
+            totalcount:restaurants.length,
+            restaurants
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:"error in get resturant api",
+            error
+        })
+    }
+}
+
+module.exports = {createresturantcontroller, getresturantcontroller}
