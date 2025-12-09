@@ -53,4 +53,36 @@ const getresturantcontroller = async (req,res) =>{
     }
 }
 
-module.exports = {createresturantcontroller, getresturantcontroller}
+const getresturantbyid = async(req,res) => {
+    try {
+        const restaurantid = req.params.id
+        if(!restaurantid){
+            return res.status(404).send({
+                success:false,
+                message:"please provide resturant id"
+            })
+        }
+        //find resturant
+        const restuarnt = await restaurantmodel.findById(restaurantid)
+        if(!restuarnt){
+            return res.status(404).send({
+                success:false,
+                message:"Resturant not found"
+            })
+        }
+        res.status(200).send({
+            success:true,
+            restuarnt
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:"Error in get resturant by id api",
+            error
+        })
+    }
+}
+
+
+module.exports = {createresturantcontroller, getresturantcontroller, getresturantbyid}
