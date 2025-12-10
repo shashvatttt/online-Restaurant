@@ -54,4 +54,30 @@ const getcategorycontroller = async(req,res) =>{
     }
 }
 
-module.exports = {createCatController, getcategorycontroller}
+//update category
+const updatecategorycontroller = async(req,res) =>{
+    try {
+        const {id} = req.params
+        const {title, imageURL} = req.body
+        const updatedcategory = await categorymodel.findByIdAndUpdate(id, {title, imageURL} , {new:true})
+        if(!updatedcategory){
+            return res.status(500).send({
+                success:false,
+                message:"No category found"
+            })
+        }
+        res.status(200).send({
+            success:true,
+            message:"Category updated"
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:"Error in update cat api",
+            error
+        })
+    }
+}
+
+module.exports = {createCatController, getcategorycontroller, updatecategorycontroller}
