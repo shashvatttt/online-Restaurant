@@ -1,5 +1,6 @@
 const categorymodel = require("../models/controllers/categorymodel")
 
+
 //create cat
 const createCatController = async(req,res) =>{
     try {
@@ -80,4 +81,35 @@ const updatecategorycontroller = async(req,res) =>{
     }
 }
 
-module.exports = {createCatController, getcategorycontroller, updatecategorycontroller}
+//delete category
+const deletecategorycontroller = async(req,res) =>{
+    try {
+        const {id} = req.params
+        if(!id){
+            return res.status(500).send({
+                success:false,
+                message:"Please provide category ID"
+            })
+        }
+        const categorgy = await categorymodel.findByIdAndDelete(id)
+        if(!categorgy){
+            return res.status(500).send({
+                success:false,
+                message:"No category found"
+            })
+        }
+        res.status(200).send({
+            success:true,
+            message:"Category deleted"
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:"Error in update cat api",
+            error
+        })
+    }
+}
+
+module.exports = {createCatController, getcategorycontroller, updatecategorycontroller, deletecategorycontroller}
