@@ -28,4 +28,30 @@ const createCatController = async(req,res) =>{
     }
 }
 
-module.exports = {createCatController}
+//get all category
+const getcategorycontroller = async(req,res) =>{
+    try {
+        const categories = await categorymodel.find({})
+        if(!categories){
+            return res.status(404).send({
+                success:false,
+                message:"No categories found"
+            })
+        }
+
+        return res.status(200).send({
+            success: true,
+            message: "All categories fetched",
+            categories
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success:false,
+            message:"Fault at get all categorgy api",
+            error
+        })
+    }
+}
+
+module.exports = {createCatController, getcategorycontroller}
